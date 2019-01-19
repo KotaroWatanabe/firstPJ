@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'hello/css/style.css' %}" />  
+  </head>
+
+  <body>
+    <h1>メイン画面</h1>
+    <p>成功</p>
+        
+    <form action="cgi-bin/example.cgi" method="post">
+    <p>案件のキーワードを入力</p>
+    <input type="search" name="search" placeholder="キーワードを入力">
+    <input type="submit" name="submit" value="検索">
+    </form>
+    
+    <p><a href="{% url 'detailpj' %}">案件の詳細画面</a></p>
+    <p><a href="{% url 'mypage' %}">マイページ</a></p>
+    <table>
+    <form action="{% url 'mainpage' %}" method="post">
+
+    {% for item in data1 %}
+        <tr>
+            <td>{{item}}</td>
+            <td><a href="{% url 'detailpj' item.id %}">案件の詳細画面★</a></td>
+            <td><a href="{% url 'mypage' item.id %}">マイページ★</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    
+
+  </body>
+</html>
