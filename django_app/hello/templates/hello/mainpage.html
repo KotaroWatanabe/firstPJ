@@ -1,37 +1,55 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <title>{{title}}</title>
-    <link rel="stylesheet" type="text/css"
-        href="{% static 'hello/css/style.css' %}" />  
-  </head>
 
-  <body>
-    <h1>メイン画面</h1>
-    <p>成功</p>
-        
-    <form action="cgi-bin/example.cgi" method="post">
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'hello/css/style.css' %}" />
+</head>
+
+<body>
+  <h1>案件一覧画面</h1>
+  <a href="mypage">マイページへ</a>
+
+  <form action="cgi-bin/example.cgi" method="post">
     <p>案件のキーワードを入力</p>
     <input type="search" name="search" placeholder="キーワードを入力">
     <input type="submit" name="submit" value="検索">
-    </form>
-    
-    <p><a href="{% url 'detailpj' %}">案件の詳細画面</a></p>
-    <p><a href="{% url 'mypage' %}">マイページ</a></p>
-    <table>
+  </form>
+
+  <table>
     <form action="{% url 'mainpage' %}" method="post">
+      {% csrf_token %}
+      {% for item in data1 %}
+      <tr>
+        <td>案件ID</td>
+        <td>案件名</td>
+        <td>案件詳細</td>
+        <td>掲載日</td>
+        <td>掲載期限</td>
+        <td>最低支払金額</td>
+        <td>最高支払金額</td>
+        <td>納期</td>
+        <td>発注ID</td>
+        <td>ステータス</td>
+      </tr>
+      <tr>
+        <td>{{item.ANKENID}}</td>
+        <td>{{item.ANKENNM}}</td>
+        <td>{{item.CONTENTS}}</td>
+        <td>{{item.REQUESTDATE}}</td>
+        <td>{{item.RECRUITDATE}}</td>
+        <td>{{item.MINPAY}}</td>
+        <td>{{item.MAXPAY}}</td>
+        <td>{{item.DELIVE}}</td>
+        <td>{{item.HTUID}}</td>
+        <td>{{item.STID}}</td>
+      </tr>
+      {% endfor %}
+  </table>
 
-    {% for item in data1 %}
-        <tr>
-            <td>{{item}}</td>
-            <td><a href="{% url 'detailpj' item.id %}">案件の詳細画面★</a></td>
-            <td><a href="{% url 'mypage' item.id %}">マイページ★</a></td>
-        </tr>
-    {% endfor %}
-    </table>
-    
 
-  </body>
+</body>
+
 </html>
