@@ -127,13 +127,23 @@ def mypage(request):
 
 
 def makepj(request):
-    data7 = ANKENTBLForm.objects.all()
 
+    if (request.method == 'POST'):
+        obj = Friend()
+        friend = FriendForm(request.POST, instance=obj)
+        friend.save()
+        return redirect(to='/hello')
     params = {
-        'title': 'Hello',
-        'data7': data7,
+        'title': '案件作成画面',
+        'form': ANKENTBLForm(),
     }
     return render(request, 'hello/makepj.html', params)
+
+    # params = {
+    #     'title': 'Hello',
+    #     'data7': data7,
+    # }
+    # return render(request, 'hello/makepj.html', params)
 
 # def jlist (request):
 #     data8 = ANKENTBL.objects.all()

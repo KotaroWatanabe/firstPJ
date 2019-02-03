@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -17,10 +18,20 @@ class Friend(models.Model):
 # --------------------追記start
 
 #----------------#
-#項目マスタ        #
+#共通関数        #
 #----------------#
 
 
+def get_next():
+    try:
+        return ANKENTBL.objects.latest('pk').ANKENID + 1
+    except:
+        return 1
+
+
+#----------------#
+#項目マスタ        #
+#----------------#
 class KOUMOKUM(models.Model):
     ITEMID = models.CharField(max_length=10)  # 項目ID
     ITEMNM = models.CharField(max_length=100)  # 項目名
@@ -62,25 +73,26 @@ class USERTBL(models.Model):
 
 
 class ANKENTBL(models.Model):
-    ANKENID = models.CharField(max_length=10)  # 案件ID(自動採番)
+    ANKENID = models.CharField(max_length=10, default=get_next)  # 案件ID(自動採番)
     ANKENNM = models.CharField(max_length=25)  # 案件名
     CONTENTS = models.CharField(max_length=500)  # 案件詳細内容
-    REQUESTDATE = models.DateTimeField(auto_now_add=True)  # 掲載日
+    REQUESTDATE = models.DateTimeField(default=timezone.now)  # 掲載日
     RECRUITDATE = models.DateTimeField()  # 掲載期限
     MINPAY = models.IntegerField(default=100)  # 最低金額
     MAXPAY = models.IntegerField(default=10000)  # 最高金額
     DELIVE = models.DateTimeField()  # 納期
-    MIDFILENM = models.CharField(max_length=30)  # 中間成果物ファイル名
-    MDCOMMENT = models.CharField(max_length=200)  # 中間成果物コメント
-    MDMONEY = models.IntegerField(default=3)  # 中間出来高(※初期値は3)
-    FNLFILENM = models.CharField(max_length=30)  # 最終成果物ファイル名
-    FNLCOMMENT = models.CharField(max_length=200)  # 最終成果物コメント
-    FNLMONEY = models.IntegerField(default=3)  # 最終出来高(※初期値は3)
+    MIDFILENM = models.CharField(max_length=30, null=True)  # 中間成果物ファイル名
+    MDCOMMENT = models.CharField(max_length=200, null=True)  # 中間成果物コメント
+    MDMONEY = models.IntegerField(default=3, null=True)  # 中間出来高(※初期値は3)
+    FNLFILENM = models.CharField(max_length=30, null=True)  # 最終成果物ファイル名
+    FNLCOMMENT = models.CharField(max_length=200, null=True)  # 最終成果物コメント
+    FNLMONEY = models.IntegerField(default=3, null=True)  # 最終出来高(※初期値は3)
     HTUID = models.ForeignKey(USERTBL, on_delete=models.CASCADE,
                               related_name='ANKENTBL_HTUID')  # 発注ユーザーID
     JYUID = models.ForeignKey(USERTBL, on_delete=models.CASCADE,
-                              related_name='ANKENTBL_JYUID')  # 受注者ID
-    STID = models.ForeignKey(KOUMOKUM, on_delete=models.CASCADE)  # ステータスID
+                              related_name='ANKENTBL_JYUID', null=True)  # 受注者ID
+    STID = models.ForeignKey(
+        KOUMOKUM, on_delete=models.CASCADE, default='ST0001')  # ステータスID
 
     # ここから下テキトー
     def __str__(self):
