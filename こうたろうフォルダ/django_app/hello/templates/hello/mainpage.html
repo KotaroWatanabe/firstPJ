@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'hello/css/style.css' %}" />
+</head>
+
+<body>
+  <h1>案件一覧画面</h1>
+  <a href="mypage">マイページへ</a>
+
+  <form action="cgi-bin/example.cgi" method="post">
+    <p>案件のキーワードを入力</p>
+    <input type="search" name="search" placeholder="キーワードを入力">
+    <input type="submit" name="submit" value="検索">
+  </form>
+
+  <table>
+    <form action="{% url 'mainpage' %}" method="post">
+
+      <tr>
+        <th>案件ID</th>
+        <th>案件名</th>
+        <th>案件詳細</th>
+        <th>掲載日</th>
+        <th>掲載期限</th>
+        <th>最低支払金額</th>
+        <th>最高支払金額</th>
+        <th>納期</th>
+        <th>発注ID</th>
+        <th>ステータス</th>
+      </tr>
+      {% csrf_token %}
+      {% for item in data1 %}      
+      <tr>
+        <td>{{item.ANKENID}}</td>
+        <td>{{item.ANKENNM}}</td>
+        <td>{{item.CONTENTS}}</td>
+        <td>{{item.REQUESTDATE}}</td>
+        <td>{{item.RECRUITDATE}}</td>
+        <td>{{item.MINPAY}}</td>
+        <td>{{item.MAXPAY}}</td>
+        <td>{{item.DELIVE}}</td>
+        <td>{{item.HTUID}}</td>
+        <td>{{item.STID}}</td>
+        <td><a href="{% url 'detailpj' item.id %}" >詳</a></td>
+       <tr>
+      {% endfor %}
+  </table>
+
+
+</body>
+
+</html>

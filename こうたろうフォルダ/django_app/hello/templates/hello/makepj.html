@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>案件作成画面</title>
+      
+  </head>
+  <body>
+    <h1>{{title}}</h1>
+    <table>
+    <form action="{% url 'makepj' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_table}}
+        <tr><td></td><td><input type="submit" value="案件作成終了"></td></tr>
+    </form>
+    </table>
+    
+    
+    <!-- ここから下はベタ書きのためコメントアウト
+    
+    <input type="text" size="700" name="text1" style="width:200px;heigh:300;" placeholder="案件：ここに案件のタイトルを記載">
+    </p>
+    <input type="text" size="700" name="text1" style="width:200px;heigh:300;" placeholder="発注者：あなたの名前を記載">
+    </p>
+    <br>
+    <textarea name="comment" placeholder="案件の詳細を記載"></textarea>
+    </p>
+    <br>
+    <input type="text" size="700" name="text1" style="width:200px;heigh:300;" placeholder="金額">
+    </p>
+    <br>
+    <input type="text" size="700" name="text1" style="width:200px;heigh:300;" placeholder="納期">
+    <br>
+    <br>
+    <p><input type="button" value="案件作成終了" id="button2"></p>
+    -->
+
+  </body>
+</html>

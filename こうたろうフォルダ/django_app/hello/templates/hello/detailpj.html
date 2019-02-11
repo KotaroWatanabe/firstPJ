@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang = " ja - jp ">
+<head>
+  <title>案件の詳細</title>
+</head>
+<body>
+
+<h1>{{title}}</h1>
+<table>
+    <form action="{% url 'detailpj' id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_table}}
+    <tr><td></td><td><input type="submit" value="click"></td></tr>        
+    </form>
+</table>
+<br></br>
+<br></br>
+
+
+    
+    
+<br></br>
+
+</body>
+</html>

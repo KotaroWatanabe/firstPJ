@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang = " ja - jp ">
+<head>
+  <title>案件の詳細</title>
+</head>
+<body>
+
+{{ post2.title }}
+<br></br>
+{{ post2.published }}
+
+<br></br>
+<a href="{% url 'yourprof' %}">相手のプロフィール画面</a>
+<p><a href="{% url 'jfinal' %}">応募最終確認画面</a></p>
+<img src="{{ post2.image.url }}"/>
+<br></br>
+{{ post2.body }}
+
+</body>
+</html>

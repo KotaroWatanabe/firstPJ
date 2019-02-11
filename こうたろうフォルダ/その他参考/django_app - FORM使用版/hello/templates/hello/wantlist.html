@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>やりたい案件一覧画面</title>
+      
+  </head>
+  <body>
+    <h1>やりたい案件一覧画面</h1>
+    <p>お気に入り案件リスト</p>
+<br>
+    　　{% for post3 in posts2.all %}
+      <a href ="{% url 'detailpj' post3.id%}">{{ post3.title }}</a>>
+      {{ post3.title }}
+      <br></br>
+
+    {% endfor %}
+    
+
+  </body>
+</html>
